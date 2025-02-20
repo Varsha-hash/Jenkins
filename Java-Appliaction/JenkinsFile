@@ -12,13 +12,13 @@ pipeline {
         MAVEN_HOME = '/usr/share/maven'
     }
 
-    stages {
+   /* stages {
         stage('Checkout') {
             steps {
                 // Checkout the code from the repository
                 git 'https://github.com/Varsha-hash/Jenkins.git'
             }
-        }
+        } */
 
         stage('Build') {
             steps {
