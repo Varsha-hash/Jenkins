@@ -16,7 +16,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from the repository
-                git 'https://your-git-repository-url.com/your-project.git'
+                git 'https://github.com/Varsha-hash/Jenkins.git'
             }
         }
 
