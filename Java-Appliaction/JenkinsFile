@@ -1,0 +1,53 @@
+pipeline {
+    agent {
+        docker { 
+            image 'maven:3.8.4-openjdk-11-slim' // Use a Maven + OpenJDK Docker image
+            args '--rm'  // Remove the container after the pipeline finishes
+        }
+    }
+
+    environment {
+        // Set environment variables if needed (e.g., JAVA_HOME, MAVEN_HOME)
+        JAVA_HOME = '/usr/lib/jvm/java-11-openjdk-amd64'
+        MAVEN_HOME = '/usr/share/maven'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from the repository
+                git 'https://your-git-repository-url.com/your-project.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Run the Maven build command to compile the project
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run tests with Maven (if any)
+                sh 'mvn test'
+            }
+        }
+
+        stage('Run Application') {
+            steps {
+                // Run the Java application using Maven exec plugin
+                sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and execution completed successfully!'
+        }
+        failure {
+            echo 'There was an issue with the build or execution.'
+        }
+    }
+}
